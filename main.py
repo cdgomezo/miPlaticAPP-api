@@ -1,3 +1,4 @@
+from fastapi import FastAPI, HTTPException
 from db.user_db import UserInDB
 from db.user_db import update_user, get_user
 from db.movement_db import MovementInDB
@@ -5,20 +6,8 @@ from db.movement_db import save_movement
 from models.user_models import UserIn, UserOut
 from models.movement_models import MovementIn, MovementOut
 import datetime
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 
 api = FastAPI()
-
-origins = [
-    "http://localhost.tiangolo.com", "https://localhost.tiangolo.com",
-    "http://localhost", "http://localhost:8080",
-]
-
-api.add_middleware(
-    CORSMiddleware, allow_origins=origins,
-    allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
-)
 
 @api.post("/user/auth/")
 async def auth_user(user_in: UserIn):
@@ -53,12 +42,12 @@ async def make_movement(movement_in: MovementIn):
     user_in_db = get_user(movement_in.username)
 
     if user_in_db == None:
-        raise HTTPException(status_code=404, detail="El usuario ingresado no existe.")
+        raise HTTPException(status_code=404, detail="El usuario no existe")
 
-    if movement_in.movement == "outcome" and user_in_db.balance < movement_in.amount: 
-        raise HTTPException(status_code=400, detail="El gasto ingresado supera su balance actual.")
+    if movement_in.movement == 'outcome' and user_in_db.balance < movement_in.amount: 
+        raise HTTPException(status_code=400, detail="El gasto ingresado supera su balance actual")
 
-    if movement_in.movement == "outcome":
+    if movement_in.movement == 'outcome':
         user_in_db.balance = user_in_db.balance - movement_in.amount
     else:
         user_in_db.balance = user_in_db.balance + movement_in.amount
