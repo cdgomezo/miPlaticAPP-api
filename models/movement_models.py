@@ -10,11 +10,11 @@ class MovementIn(BaseModel):
     amount: int
 
 class MovementOut(BaseModel):
-    id_movement: int = 0
+    id_movement: int
     username: str
     date: datetime = datetime.now()
-    movement: str # Income or Outcome
-    movement_type: str # Fixed or Variable
+    movement: str
+    movement_type: str
     movement_category: str
     description: str
     amount: int
