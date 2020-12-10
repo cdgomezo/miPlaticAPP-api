@@ -6,8 +6,20 @@ from db.movement_db import save_movement
 from models.user_models import UserIn, UserOut
 from models.movement_models import MovementIn, MovementOut
 import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 api = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com", "https://localhost.tiangolo.com",
+    "http://localhost", "http://localhost:8080", "http://127.0.0.1:8000",
+    "https://miplaticapp.herokuapp.com/"
+]
+
+api.add_middleware(
+    CORSMiddleware, allow_origins=origins,
+    allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
+)
 
 @api.post("/user/auth/")
 async def auth_user(user_in: UserIn):
