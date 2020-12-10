@@ -1,19 +1,25 @@
 from datetime import datetime
 from pydantic import BaseModel
-# from typing import Dict
 
 class MovementInDB(BaseModel):
     id_movement: int = 0
     username: str
     date: datetime = datetime.now()
-    movement: str # Income or Outcome
-    movement_type: str # Fixed or Variable
+    movement: str
+    movement_type: str
     movement_category: str
     description: str
     amount: int
     actual_balance: int
 
 database_movements = []
+generator = {"id":0}
+
+def save_movement(movement_in_db: MovementInDB):
+    generator["id"] = generator["id"] + 1
+    movement_in_db.id_movement = generator["id"]
+    database_movements.append(movement_in_db)
+    return movement_in_db
 
 # database_movements = Dict[str, MovementInDB]
 
@@ -77,11 +83,3 @@ database_movements = []
 #         "actual_balance": 540000
 #     }),
 # }
-
-generator = {"id":10005}
-
-def save_movement(movement_in_db: MovementInDB):
-    generator["id"] = generator["id"] + 1
-    movement_in_db.id_movement = generator["id"]
-    database_movements.append(movement_in_db)
-    return movement_in_db
