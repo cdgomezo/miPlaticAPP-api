@@ -1,9 +1,9 @@
 from db.user_db import UserInDB
 from db.user_db import update_user, get_user
-from db.transaction_db import TransactionInDB
-from db.transaction_db import save_transaction
+from db.movement_db import MovementInDB
+from db.movement_db import save_movement
 from models.user_models import UserIn, UserOut
-from models.transaction_models import TransactionIn, TransactionOut
+from models.movement_models import MovementIn, MovementOut
 import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
