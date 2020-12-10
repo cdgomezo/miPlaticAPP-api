@@ -3,8 +3,8 @@ from datetime import datetime
 
 class MovementIn(BaseModel):
     username: str
-    movement: str # Income or Outcome
-    movement_type: str # Fixed or Variable
+    movement: str
+    movement_type: str
     movement_category: str
     description: str
     amount: int
@@ -12,7 +12,7 @@ class MovementIn(BaseModel):
 class MovementOut(BaseModel):
     id_movement: int
     username: str
-    date: datetime = datetime.now()
+    date: datetime
     movement: str
     movement_type: str
     movement_category: str
